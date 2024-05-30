@@ -2,19 +2,21 @@ package fr.diginamic.props;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 
-public class TestConnectionJdbc {
+public class DatabaseConnection {
+    private String url = null;
 
-    public static void main(String[] args) {
+    private Connection conn = null;
+
+    public DatabaseConnection() {
+        Configurations config = new Configurations();
         StringBuilder connectionString = new StringBuilder();
 
-        Configurations config = new Configurations();
         try {
             Configuration properties = config.properties("config.properties");
 
@@ -30,24 +32,21 @@ public class TestConnectionJdbc {
             connectionString.append(pass);
             // connectionString.append("&ssl=true");
 
+            url = connectionString.toString();
+
             try {
-                Connection conn = DriverManager.getConnection(connectionString.toString());
-
-                ResultSet cursor = conn.createStatement().executeQuery("select * from public.producer");
-
-                System.out.println(cursor.getMetaData().getColumnName(2));
-                while (cursor.next()) {
-                    System.out.println(cursor.getObject(3));
-                }
-
+                conn = DriverManager.getConnection(this.url);
             } catch (SQLException e) {
                 e.printStackTrace();
-
             }
 
         } catch (ConfigurationException e) {
             e.printStackTrace();
         }
-
     }
+
+    public Connection getConnection() {
+        return this.conn;
+    }
+
 }
