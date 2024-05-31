@@ -8,6 +8,10 @@ public class City {
     private int departmentId;
     private int regionId;
 
+    public City() {
+        super();
+    }
+
     public City(int id, String name, int population, int departmentId, int regionId) {
         this.id = id;
         this.name = name;
@@ -54,6 +58,17 @@ public class City {
 
     public void setRegionId(int regionId) {
         this.regionId = regionId;
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", population=" + population +
+                ", departmentId=" + departmentId +
+                ", regionId=" + regionId +
+                '}';
     }
 
 }

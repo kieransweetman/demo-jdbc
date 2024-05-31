@@ -5,7 +5,7 @@ import java.util.List;
 public interface GeneralDao<T> {
     List<T> extract();
 
-    void insert(T obj);
+    T insert(T obj);
 
     int update(T obj);
 
